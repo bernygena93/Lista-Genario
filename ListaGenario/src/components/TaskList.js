@@ -1,29 +1,43 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
+import Task from './Task';
+import {styles} from './styles/taskListStyles';
 
-const styles = StyleSheet.create({
-  containerList: {
-    height: '80%',
-    width: '90%',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: 3,
-    borderColor: '#C2BFBF',
-    backgroundColor: '#FCFCFC',
-  },
-});
-
-export default function TaskList({listItems}) {
+export default function TaskList({listItems, handleDelete, handleState}) {
   return (
     <View>
-      <Text>Item List</Text>
+      <Text style={styles.text}>In progess</Text>
       <View style={styles.containerList}>
         <FlatList
           data={listItems}
           keyExtractor={item => item.id}
-          renderItem={data => <Text>{data.item.task}</Text>}
+          renderItem={data =>
+            !data.item.state && (
+              <Task
+                task={data.item}
+                handleDelete={handleDelete}
+                handleState={handleState}
+                colorState={styles.containerElementInProgress}
+              />
+            )
+          }
+        />
+      </View>
+      <Text style={styles.text}>Done</Text>
+      <View style={styles.containerList}>
+        <FlatList
+          data={listItems}
+          keyExtractor={item => item.id}
+          renderItem={data =>
+            data.item.state && (
+              <Task
+                task={data.item}
+                handleDelete={handleDelete}
+                handleState={handleState}
+                colorState={styles.containerElement}
+              />
+            )
+          }
         />
       </View>
     </View>

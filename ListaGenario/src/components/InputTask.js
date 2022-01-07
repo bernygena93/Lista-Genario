@@ -1,45 +1,41 @@
 import React, {useState} from 'react';
 import {Button, StyleSheet, TextInput, View} from 'react-native';
-
-const styles = StyleSheet.create({
-  containerInput: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-around',
-    marginTop: 20,
-    height: 40,
-    backgroundColor: '#F6F6F6',
-  },
-  input: {
-    width: 250,
-    borderBottomWidth: 1,
-    borderBottomColor: '#C2BFBF',
-  },
-});
+import {styles} from './styles/inputTaskStyles';
 
 export default function InputTask({handlePress}) {
   const [textItem, setTextItem] = useState({id: 0, task: ''});
 
-  const handleChange = e => {
+  const handleChange = text => {
     setTextItem({
       id: Math.random(),
-      task: e.target.value,
+      task: text,
     });
   };
 
   const handleOnPress = () => {
     handlePress(textItem);
-    setTextItem('');
+    setTextItem({
+      id: 0,
+      task: '',
+      state: false,
+    });
   };
   return (
     <View style={styles.containerInput}>
       <TextInput
-        placeholder="new item"
+        placeholder="
+        Enter new task"
+        placeholderTextColor="#E2EDED"
         style={styles.input}
-        value={textItem}
-        onChange={handleChange}
+        value={textItem.task}
+        onChangeText={text => handleChange(text)}
       />
-      <Button title="ADD" onPress={handleOnPress} disabled={textItem === ''} />
+      <Button
+        title="ADD"
+        onPress={handleOnPress}
+        disabled={textItem === ''}
+        color="#e07a5f"
+      />
     </View>
   );
 }

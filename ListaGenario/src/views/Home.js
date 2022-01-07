@@ -1,16 +1,8 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import InputTask from '../components/InputTask';
 import TaskList from '../components/TaskList';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#F6F6F6',
-  },
-});
+import {styles} from './styles/homeStyles';
 
 export default function Home() {
   const [listItems, setListItems] = useState([]);
@@ -19,10 +11,27 @@ export default function Home() {
     setListItems([...listItems, textItem]);
   };
 
+  const handleDelete = id => {
+    setListItems(listItems.filter(task => task.id !== id));
+  };
+  const handleState = task => {
+    let updatedList = listItems.filter(item => item.id !== task.id);
+    updatedList.push({
+      id: task.id,
+      task: task.task,
+      state: true,
+    });
+    setListItems(updatedList);
+  };
+
   return (
-    <View>
+    <View style={styles.container}>
       <InputTask handlePress={handlePress} />
-      <TaskList listItems={listItems} />
+      <TaskList
+        listItems={listItems}
+        handleDelete={handleDelete}
+        handleState={handleState}
+      />
     </View>
   );
 }
