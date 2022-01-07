@@ -34,7 +34,7 @@ export default function InputTask({handlePress}) {
         title="ADD"
         onPress={handleOnPress}
         disabled={textItem === ''}
-        color="#e07a5f"
+        color="#3d405b"
       />
     </View>
   );

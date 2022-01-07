@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
+import Header from '../components/Header';
 import InputTask from '../components/InputTask';
 import TaskList from '../components/TaskList';
 import {styles} from './styles/homeStyles';
@@ -26,6 +27,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
+      <Header title="ToDo-List" />
       <InputTask handlePress={handlePress} />
       <TaskList
         listItems={listItems}
